@@ -1,6 +1,6 @@
 import '../assets/css/App.css';
 import React, {Component} from 'react';
-import {Panel} from 'react-bootstrap'
+import {Panel} from 'react-bootstrap';
 
 const currentMatches = [{
     "id": "20074",
@@ -25,6 +25,14 @@ const currentMatches = [{
 }];
 
 class App extends React.Component {
+    constructor(){
+        super();
+        this.triggerNotification = this.triggerNotification.bind(this);
+    }
+
+    triggerNotification(){
+        console.log('DEBUG', '35 triggerNotification', );
+    }
 
     componentWillMount() {
         console.log('DEBUG', '30 componentWillMount', currentMatches);
@@ -38,7 +46,7 @@ class App extends React.Component {
         let currentMatchHTML = []
         for (let i = 0; i < currentMatch.length; i++) {
             currentMatchHTML.push(
-                <div className="single-match-container" key={i}>
+                <div className="single-match-container" key={i} onClick={this.triggerNotification}>
                     <div className="series-name">
                         {currentMatch[i].series}
                     </div>
