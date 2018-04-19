@@ -1,6 +1,7 @@
 import '../assets/css/App.css';
 import React, {Component} from 'react';
 import {Panel} from 'react-bootstrap';
+const { ipcRenderer } = require('electron')
 
 const currentMatches = [{
     "id": "20074",
@@ -30,8 +31,15 @@ class App extends React.Component {
         this.triggerNotification = this.triggerNotification.bind(this);
     }
 
-    triggerNotification(){
-        console.log('DEBUG', '35 triggerNotification', );
+    triggerNotification() {
+        // send notification example
+        ipcRenderer.send('notification', {
+            type: 'basic',
+            data: {
+                title: 'My notification',
+                message: 'Hello, there!'
+            }
+        })
     }
 
     componentWillMount() {
