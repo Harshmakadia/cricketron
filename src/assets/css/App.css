@@ -17,3 +17,40 @@ h1 {
   font-size: 16px;
   font-weight: 600;
 }
+
+.notification-title{
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.notification-container{
+  border: 2px solid #dcdcdc;
+  display: table-cell;
+  vertical-align: center;
+  height: 90px;
+}
+
+.row-table{
+  display: table;
+  height: 250px;
+  width: 100%;
+}
+
+.optional-container{
+  height: 89px;
+  font-size: 30px;
+  text-align: center;
+  padding-top: 30px;
+  background: #b7b7b7;
+  border: 1px solid black;
+}
+
+.minutes-setting{
+  outline: none;
+  border: 0;
+}
+
+.padding-spacer{
+  padding: 20px;
+}
