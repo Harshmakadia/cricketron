@@ -1,29 +1,13 @@
 import '../assets/css/App.css';
 import React, {Component} from 'react';
 import {Panel} from 'react-bootstrap';
-const { ipcRenderer } = require('electron')
+import { ipcRenderer } from 'electron';
+import cricLive from 'cric-live';
 
-const currentMatches = [{
-    "id": "20074",
-    "type": "T20",
-    "series": "Indian Premier League, 2018",
-    "title": "MI vs RCB",
-    "state": "Result",
-    "status": "Mumbai won by 46 runs",
-    "teams": [{"name": "Mumbai", "shortName": "MI"}, {"name": "Bangalore", "shortName": "RCB"}],
-    "date": "Apr 17 2018",
-    "startTime": "14:30"
-}, {
-    "id": "20073",
-    "type": "T20",
-    "series": "Indian Premier League, 2018",
-    "title": "KKR vs DD",
-    "state": "Result",
-    "status": "Kolkata won by 71 runs",
-    "teams": [{"name": "Kolkata", "shortName": "KKR"}, {"name": "Delhi", "shortName": "DD"}],
-    "date": "Apr 16 2018",
-    "startTime": "14:30"
-}];
+ipcRenderer.on('open-sms', (event, filename) => {
+    console.log('sms setting open');
+});
+
 
 class App extends React.Component {
     constructor(){
@@ -43,8 +27,11 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        console.log('DEBUG', '30 componentWillMount', currentMatches);
-        this.setState({currentMatches: currentMatches})
+        this.setState({currentMatches: []})
+        cricLive.getRecentMatches()
+            .then(currentMatches => {
+                this.setState({ currentMatches })
+            })
     }
 
     render() {

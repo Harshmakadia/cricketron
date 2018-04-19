@@ -1,7 +1,7 @@
 'use strict';
 
 // Import parts of electron to use
-const { app, BrowserWindow, ipcMain} = require('electron');
+const { app, BrowserWindow, ipcMain, Menu} = require('electron');
 const path = require('path')
 const url = require('url')
 require('./node/notifications')
@@ -14,6 +14,21 @@ let dev = false;
 if ( process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath) ) {
   dev = true;
 }
+
+const template = [
+  {
+    label: 'Settings',
+    submenu: [
+      {
+        label: 'SMS Credentials',
+        click() { mainWindow.webContents.send('open-sms'); }
+      }
+    ]
+  }
+]
+
+const menu = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(menu)
 
 function createWindow() {
   // Create the browser window.
