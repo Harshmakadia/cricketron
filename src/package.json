@@ -19,6 +19,6 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "cric-live": "^1.0.2"
+    "cric-live": "^1.0.3"
   }
 }
