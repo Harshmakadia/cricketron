@@ -4,5 +4,7 @@ node_modules/
 dist/
 builds/
 \.idea/
-
+.history
 src/package-lock\.json
+
+package-lock\.json

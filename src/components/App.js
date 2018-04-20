@@ -2,6 +2,7 @@ import '../assets/css/App.css';
 import '../assets/css/accordion.css';
 import React, {Component} from 'react';
 import {ipcRenderer} from 'electron';
+import sanitizeHTML from 'sanitize-html';
 import cricLive from 'cric-live';
 import {Panel, Row, Col, Button} from 'react-bootstrap';
 import {
@@ -10,6 +11,12 @@ import {
     AccordionItemTitle,
     AccordionItemBody,
 } from 'react-accessible-accordion';
+
+const scoreMapper = {
+    4: 'FOUR',
+    6: 'SIX',
+    W: 'WICKET',
+}
 
 ipcRenderer.on('open-sms', (event, filename) => {
     console.log('sms setting open');
@@ -20,9 +27,9 @@ class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            isFourEnabled: false,
-            isSixEnabled: false,
-            isWicketEnabled: false,
+            isFourEnabled: true,
+            isSixEnabled: true,
+            isWicketEnabled: true,
             currentMatchId: "",
             interval: 20,
             over: "0"
@@ -44,14 +51,10 @@ class App extends React.Component {
             })
     }
 
-    triggerNotification(title, message) {
+    triggerNotification(type, data) {
         // send notification example
         ipcRenderer.send('notification', {
-            type: 'basic',
-            data: {
-                title: title,
-                message: message
-            }
+            type, data
         })
     }
 
@@ -71,22 +74,35 @@ class App extends React.Component {
         cricLive.getLiveScore(id)
             .then(liveMatchScore => {
                 console.log('DEBUG', '46 ', liveMatchScore);
-                console.log("last Ball", liveMatchScore.score.lastBall);
+                console.log("last Ball", liveMatchScore.score.lastBallDetail.score);
                 console.log("Over", liveMatchScore.score.detail.batting.overs);
-                const lastBallScore = liveMatchScore.score.lastBall;
+                const lastBallScore = liveMatchScore.score.lastBallDetail.score;
                 const over = liveMatchScore.score.detail.batting.overs;
+                const wickets = liveMatchScore.score.detail.batting.wickets;
+                const score = liveMatchScore.score.detail.batting.score;
+                const teamName = liveMatchScore.score.detail.batting.shortName;
+                const lastBallDetail = liveMatchScore.score.lastBallDetail;
                 if (this.state.over !== over && over !== "0") {
-                    if (lastBallScore === "4" && this.state.isFourEnabled) {
-                        this.triggerNotification(`FOUR`, `${liveMatchScore.score.detail.batting.score}-${liveMatchScore.score.detail.batting.wickets}(${over})`);
-                    }
-                    if (lastBallScore === "6" && this.state.isSixEnabled) {
-                        this.triggerNotification(`SIX`, `${liveMatchScore.score.detail.batting.score}-${liveMatchScore.score.detail.batting.wickets}(${over})`);
+                    if ((lastBallScore === "4" && this.state.isFourEnabled) || (lastBallScore === "6" && this.state.isSixEnabled)) {
+                        let message = "";
+                        liveMatchScore.score.batsmen.forEach(batsman => {
+                            const batsmanName = `${batsman.shortName}${batsman.strike === '1'? '*' :''}`;
+                            message += `${batsmanName.padEnd(25)} \t${batsman.r}(${batsman.b})\n`
+                        })
+                        this.triggerNotification(`${scoreMapper[lastBallScore]}`, {
+                            title: `${scoreMapper[lastBallScore]} by ${lastBallDetail.batsman[0].shortName} - ${teamName} ${score}/${wickets}`,
+                            message
+                        });
                     }
                     if (lastBallScore === "W" && this.state.isWicketEnabled) {
-                        this.triggerNotification(`WICKET`, `${liveMatchScore.score.detail.batting.score}-${liveMatchScore.score.detail.batting.wickets}(${over})`);
+                        const outBatsman = lastBallDetail.batsman[0];
+                        this.triggerNotification(`WICKET`, {
+                            title: `${scoreMapper[lastBallScore]} - ${outBatsman.shortName} ${outBatsman.r}(${outBatsman.b}) b ${lastBallDetail.bowler[0].shortName}`,
+                            message: `${teamName} ${score}/${wickets} - ${sanitizeHTML(lastBallDetail.commentary, { allowedTags: [] })}`
+                        });
                     }
                 }
-                this.setState({over});
+                this.setState({over: 9});
             })
     }
 
@@ -162,7 +178,7 @@ class App extends React.Component {
                 <Panel>
                     <Panel.Body>Get live cricket score updates here</Panel.Body>
                 </Panel>
-                <Button bsStyle="primary" onClick={() => this.triggerNotification("Hey Stay Tunned", "You will Notification of the IPL")}>Try Sample Notification</Button>
+                <Button bsStyle="primary" onClick={() => this.getLiveScore("20075")}>Try Sample Notification</Button>
                 <br/>
                 <br/>
                 <Panel>
