@@ -1,25 +1,18 @@
 {
-  "name": "basic-electron-react-boilerplate",
-  "version": "0.7.0",
-  "description": "Minimal and modern react+electron+webpack boilerplate",
-  "author": "Phillip Barbiero",
-  "homepage": "https://github.com/pbarbiero/basic-electron-react-boilerplate",
+  "name": "Cricketron",
+  "version": "0.0.1",
+  "description": "Cricket score notifications",
+  "author": "Harsh Makadiya and Ridham Tarpara",
+  "homepage": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pbarbiero/basic-electron-react-boilerplate.git"
+    "url": "https://github.com/Harshmakadia/cricketron.git"
   },
   "license": "MIT",
   "main": "main.js",
-  "scripts": {
-    "prod": "webpack --config webpack.build.config.js && electron --noDevServer .",
-    "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js",
-    "build": "webpack --config webpack.build.config.js",
-    "package": "webpack --config webpack.build.config.js",
-    "postpackage": "electron-packager ./ --out=./builds"
-  },
   "devDependencies": {},
   "dependencies": {
-    "cric-live": "^1.0.5",
+    "cric-live": "^1.0.6",
     "path": "^0.12.7",
     "sanitize-html": "^1.18.2",
     "react-accessible-accordion": "^2.3.1",

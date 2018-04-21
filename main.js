@@ -31,9 +31,9 @@ const menu = Menu.buildFromTemplate(template)
 Menu.setApplicationMenu(menu)
 
 function createWindow() {
-  // Create the browser window.
+  // Create the browser winçdow.
   mainWindow = new BrowserWindow({
-    width: 1024, height: 768, show: false
+    width: 1024, height: 768, show: false, icon:'./node/logo.ico', title: 'Cricketron'
   });
 
   // and load the index.html of the app.

@@ -110,7 +110,7 @@ class App extends React.Component {
     cronjobNotification(id) {
         const intervalTime = this.state.interval * 1000;
         setInterval(() => {
-            this.getLiveScore("20078");
+            this.getLiveScore(id);
         }, intervalTime);
     }
 
@@ -179,7 +179,7 @@ class App extends React.Component {
                 <Panel>
                     <Panel.Body>Get live cricket score updates here</Panel.Body>
                 </Panel>
-                <Button bsStyle="primary" onClick={() => this.getLiveScore("20078")}>Try Sample Notification</Button>
+                <Button bsStyle="primary" onClick={() => this.triggerNotification('test',{title: "Hey Stay Tunned", message: "You will Notification of the IPL"})}>Try Sample Notification</Button>
                 <br/>
                 <br/>
                 <Panel>
