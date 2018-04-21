@@ -33,7 +33,8 @@ class App extends React.Component {
             isWicketEnabled: true,
             currentMatchId: "",
             interval: 20,
-            over: "0"
+            over: "0",
+            intervalValue : ""
         }
         this.triggerNotification = this.triggerNotification.bind(this);
         this.updateFour = this.updateFour.bind(this);
@@ -41,6 +42,7 @@ class App extends React.Component {
         this.updateWicket = this.updateWicket.bind(this);
         this.getLiveScore = this.getLiveScore.bind(this);
         this.cronjobNotification = this.cronjobNotification.bind(this);
+        this.updateIntervalValue = this.updateIntervalValue.bind(this);
     }
 
     componentWillMount() {
@@ -69,6 +71,11 @@ class App extends React.Component {
 
     updateWicket() {
         this.setState({isWicketEnabled: !this.state.isWicketEnabled});
+    }
+
+    updateIntervalValue(e){
+        //Update Interval Value here
+        this.setState({intervalValue : e.target.value});
     }
 
     getLiveScore(id) {
@@ -110,7 +117,7 @@ class App extends React.Component {
     cronjobNotification(id) {
         const intervalTime = this.state.interval * 1000;
         setInterval(() => {
-            this.getLiveScore(id);
+            this.getLiveScore("20079");
         }, intervalTime);
     }
 
@@ -143,16 +150,19 @@ class App extends React.Component {
                                     <span className="notification-title-1">
                                         Something Special
                                     </span>
+                                    <hr className="custom-divider"/>
                                 <div>
-                                    4's <input type="checkbox" value="fours"
+                                    <b>4's</b> <input type="checkbox" value="fours"
                                                checked={this.state.isFourEnabled} onChange={this.updateFour}/>
                                 </div>
+                                <hr className="custom-divider"/>
                                 <div>
-                                    6's <input type="checkbox" value="sixes"
+                                    <b>6's</b> <input type="checkbox" value="sixes"
                                                checked={this.state.isSixEnabled} onChange={this.updateSix}/>
                                 </div>
+                                <hr className="custom-divider"/>
                                 <div>
-                                    Wickets <input type="checkbox" value="wickets"
+                                    <b>Wickets</b> <input type="checkbox" value="wickets"
                                                    checked={this.state.isWicketEnabled} onChange={this.updateWicket}/>
                                 </div>
                             </Col>
@@ -162,12 +172,15 @@ class App extends React.Component {
                             <Col lg={5} md={5} sm={5} xs={12} className="notification-container">
                                     <span className="notification-title-2">
                                         Every
-                                    </span><br/>
-                                <input type="text" className="minutes-setting" autoFocus/> <br/>
+                                    </span>
+                                    <hr className="custom-divider"/>
+                                <input type="text" value={this.state.intervalValue} placeholder="______(In Minutes)"
+                                className="minutes-setting" onChange={this.updateIntervalValue} autoFocus/> 
+                                <hr className="custom-divider"/>
                                 Minutes
                             </Col>
                         </Row>
-                        <Button bsStyle="success" onClick={() => this.cronjobNotification(currentMatch[i].id)}>SAVE</Button>
+                        <Button bsStyle="success"  className="save-config-btn" onClick={() => this.cronjobNotification(currentMatch[i].id)}>SAVE</Button>
                     </AccordionItemBody>
                 </AccordionItem>
             )
@@ -177,7 +190,7 @@ class App extends React.Component {
             <div className="container">
                 <h1 className="container-header">Hello, Cricket Score!</h1>
                 <Panel>
-                    <Panel.Body>Get live cricket score updates here</Panel.Body>
+                    <Panel.Body className="panel-header">Get live cricket score updates here</Panel.Body>
                 </Panel>
                 <Button bsStyle="primary" onClick={() => this.triggerNotification('test',{title: "Hey Stay Tunned", message: "You will Notification of the IPL"})}>Try Sample Notification</Button>
                 <br/>

@@ -28,7 +28,7 @@ h1 {
   border: 2px solid #dcdcdc;
   display: table-cell;
   vertical-align: center;
-  height: 90px;
+  height: 100px;
 }
 
 .row-table{
@@ -38,12 +38,12 @@ h1 {
 }
 
 .optional-container{
-  height: 89px;
+  height: 99px;
   font-size: 30px;
   text-align: center;
-  padding-top: 30px;
+  padding-top: 20px;
   background: #b7b7b7;
-  border: 1px solid black;
+  border: 4px solid #9c9c9c;
 }
 
 .minutes-setting{
@@ -53,4 +53,30 @@ h1 {
 
 .padding-spacer{
   padding: 20px;
+}
+
+.panel-default{
+  border-radius: 5px;
+}
+
+.panel-header:hover{
+  box-shadow: inset 0 0 10px #000000;
+  border-radius: 5px;
+}
+
+.notification-container:hover{
+  box-shadow: inset 0 0 10px #000000;
+}
+
+.custom-divider{
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.save-config-btn{
+  width: 100%;
+}
+
+.optional-container:hover{
+  background: #dcdcdc;
 }

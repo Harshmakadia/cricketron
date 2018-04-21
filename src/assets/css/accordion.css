@@ -35,7 +35,7 @@
 }
 
 .accordion__title:hover {
-    background-color: #ddd;
+    box-shadow : inset 0 0 10px #000000;
 }
 
 .accordion__body {
@@ -158,4 +158,9 @@
 .accordion__title--animated[aria-expanded='true']:hover .accordion__arrow {
     animation-name: move-up;
     animation-duration: 1.5s;
+}
+
+/* Custom CSS */
+.accordion__item{
+    margin-bottom: 10px;
 }
