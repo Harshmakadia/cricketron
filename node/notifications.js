@@ -8,27 +8,33 @@ const path = require('path');
  */
 ipcMain.on('notification', (event, arg) => {
     // write switch case on arg.type for different type of notifications (https://www.npmjs.com/package/node-notifier)
-    console.log(arg);
     switch (arg.type) {
         case 'FOUR':
             data = arg.data;
-            data.icon = path.join(__dirname, 'four.png'),
-            data.sound = true,
+            data.sound = true;
+            data.icon = path.join(__dirname, 'logo.png');
+            data.contentImage = path.join(__dirname, 'four.png');
+            data.closeLabel = 'Close';
             notifier.notify(arg.data);
             break;
         case 'SIX':
             data = arg.data;
-            data.icon= path.join(__dirname, 'six.png'),
-            data.sound = true,
+            data.sound = true;
+            data.icon= path.join(__dirname, 'logo.png');
+            data.contentImage = path.join(__dirname, 'six.png');
+            data.closeLabel = 'Close';
             notifier.notify(arg.data);
             break;
         case 'WICKET':
             data = arg.data;
-            data.icon=  path.join(__dirname, 'wicket.png'),
-            data.sound = true,
+            data.sound = true;
+            data.icon=  path.join(__dirname, 'logo.png');
+            data.contentImage = path.join(__dirname, 'wicket.png');
+            data.closeLabel = 'Close';
             notifier.notify(arg.data);
             break;
         default:
+            notifier.notify(arg.data);
             break;
     }
 })

@@ -3,6 +3,7 @@ import '../assets/css/accordion.css';
 import React, {Component} from 'react';
 import {ipcRenderer} from 'electron';
 import sanitizeHTML from 'sanitize-html';
+// import cricLive from '../../../npm-cricbuzz';
 import cricLive from 'cric-live';
 import {Panel, Row, Col, Button} from 'react-bootstrap';
 import {
@@ -90,7 +91,7 @@ class App extends React.Component {
                             message += `${batsmanName.padEnd(25)} \t${batsman.r}(${batsman.b})\n`
                         })
                         this.triggerNotification(`${scoreMapper[lastBallScore]}`, {
-                            title: `${scoreMapper[lastBallScore]} by ${lastBallDetail.batsman[0].shortName} - ${teamName} ${score}/${wickets}`,
+                            title: `${scoreMapper[lastBallScore]} by ${lastBallDetail.batsman[0].shortName} - ${teamName} ${score}/${wickets} (${over})`,
                             message
                         });
                     }
@@ -102,14 +103,14 @@ class App extends React.Component {
                         });
                     }
                 }
-                this.setState({over: 9});
+                this.setState({over});
             })
     }
 
     cronjobNotification(id) {
         const intervalTime = this.state.interval * 1000;
         setInterval(() => {
-            this.getLiveScore("20077");
+            this.getLiveScore("20078");
         }, intervalTime);
     }
 
@@ -178,7 +179,7 @@ class App extends React.Component {
                 <Panel>
                     <Panel.Body>Get live cricket score updates here</Panel.Body>
                 </Panel>
-                <Button bsStyle="primary" onClick={() => this.getLiveScore("20075")}>Try Sample Notification</Button>
+                <Button bsStyle="primary" onClick={() => this.getLiveScore("20078")}>Try Sample Notification</Button>
                 <br/>
                 <br/>
                 <Panel>
