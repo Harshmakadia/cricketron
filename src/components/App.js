@@ -117,7 +117,7 @@ class App extends React.Component {
     cronjobNotification(id) {
         const intervalTime = this.state.interval * 1000;
         setInterval(() => {
-            this.getLiveScore("20079");
+            this.getLiveScore(id);
         }, intervalTime);
     }
 
