@@ -38,6 +38,7 @@
     "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
+    "bootstrap": "^4.1.0",
     "node-notifier": "^5.2.1"
   }
 }

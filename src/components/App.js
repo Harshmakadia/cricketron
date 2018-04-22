@@ -188,22 +188,18 @@ class App extends React.Component {
 
         return (
             <div className="container">
-                <h1 className="container-header">Hello, Cricket Score!</h1>
-                <Panel>
-                    <Panel.Body className="panel-header">Get live cricket score updates here</Panel.Body>
-                </Panel>
+                <h1 className="container-header">Hello, Cricket Scores!</h1>
+                <h3 className="subtitle">Get live cricket score updates here</h3><br/>
                 <Button bsStyle="primary" onClick={() => this.triggerNotification('test',{title: "Hey Stay Tunned", message: "You will Notification of the IPL"})}>Try Sample Notification</Button>
                 <br/>
                 <br/>
-                <Panel>
-                    <Panel.Body>
-                        <div>
-                            <Accordion>
-                                {currentMatchHTML}
-                            </Accordion>
-                        </div>
-                    </Panel.Body>
-                </Panel>
+                <div>
+                    <div>
+                        <Accordion>
+                            {currentMatchHTML}
+                        </Accordion>
+                    </div>
+                </div>
             </div>
         );
     }
