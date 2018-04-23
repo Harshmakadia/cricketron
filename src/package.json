@@ -12,7 +12,7 @@
   "main": "main.js",
   "devDependencies": {},
   "dependencies": {
-    "cric-live": "^1.0.6",
+    "cric-live": "^1.0.8",
     "path": "^0.12.7",
     "sanitize-html": "^1.18.2",
     "react-accessible-accordion": "^2.3.1",
