@@ -52,7 +52,8 @@ h1 {
 .minutes-setting{
   outline: none;
   border: 0;
-  width: 90%
+  width: 90%;
+  background: transparent;
 }
 
 .padding-spacer{
