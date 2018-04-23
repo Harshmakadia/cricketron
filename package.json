@@ -14,8 +14,10 @@
     "prod": "webpack --config webpack.build.config.js && electron --noDevServer .",
     "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js",
     "build": "webpack --config webpack.build.config.js",
-    "package": "webpack --config webpack.build.config.js",
-    "postpackage": "electron-packager ./ --out=./builds --icon='./node/logo.icns'"
+    "packagemac": "webpack --config webpack.build.config.js",
+    "packagewin": "webpack --config webpack.build.config.js",
+    "postpackagemac": "electron-packager ./ --out=./builds --icon='./node/logo.icns'",
+    "postpackagewin": "electron-packager ./ --out=./builds --platform=win32 --arch=x64 --icon=node/logo.ico"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -31,8 +33,6 @@
     "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "^1.1.5",
     "html-webpack-plugin": "^2.28.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
     "style-loader": "^0.19.0",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.4.5"
