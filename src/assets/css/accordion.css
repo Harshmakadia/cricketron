@@ -25,7 +25,7 @@
 }
 
 .accordion__title {
-    background-color: #f4f4f4;
+    background-color: transparent;
     color: #444;
     cursor: pointer;
     padding: 18px;
@@ -172,3 +172,7 @@
 }
 
 .notification-content{border: 1px solid rgba(0, 0, 0, 0.1);}
+
+.accordion__title{
+    border: 1px solid #000;
+}

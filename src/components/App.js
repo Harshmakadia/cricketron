@@ -32,10 +32,11 @@ class App extends React.Component {
             isSixEnabled: true,
             isWicketEnabled: true,
             currentMatchId: "",
+            currentMatch: "No Match Selected",
             interval: 20,
             over: "0",
-            intervalValue : "",
-            shouldShowTMC : ""
+            intervalValue: "",
+            shouldShowTMC: ""
         }
         this.triggerNotification = this.triggerNotification.bind(this);
         this.updateFour = this.updateFour.bind(this);
@@ -76,9 +77,9 @@ class App extends React.Component {
         this.setState({isWicketEnabled: !this.state.isWicketEnabled});
     }
 
-    updateIntervalValue(e){
+    updateIntervalValue(e) {
         //Update Interval Value here
-        this.setState({intervalValue : e.target.value});
+        this.setState({intervalValue: e.target.value});
     }
 
     getLiveScore(id) {
@@ -97,9 +98,9 @@ class App extends React.Component {
                     if ((lastBallScore === "4" && this.state.isFourEnabled) || (lastBallScore === "6" && this.state.isSixEnabled)) {
                         let message = "";
                         liveMatchScore.score.batsmen.forEach(batsman => {
-                            const batsmanName = `${batsman.shortName}${batsman.strike === '1'? '*' :''}`;
+                            const batsmanName = `${batsman.shortName}${batsman.strike === '1' ? '*' : ''}`;
                             message += `${batsmanName.padEnd(25)} \t${batsman.r}(${batsman.b})\n`
-                        })
+                        });
                         this.triggerNotification(`${scoreMapper[lastBallScore]}`, {
                             title: `${scoreMapper[lastBallScore]} by ${lastBallDetail.batsman[0].shortName} - ${teamName} ${score}/${wickets} (${over})`,
                             message
@@ -109,27 +110,30 @@ class App extends React.Component {
                         const outBatsman = lastBallDetail.batsman[0];
                         this.triggerNotification(`WICKET`, {
                             title: `${scoreMapper[lastBallScore]} - ${outBatsman.shortName} ${outBatsman.r}(${outBatsman.b}) b ${lastBallDetail.bowler[0].shortName}`,
-                            message: `${teamName} ${score}/${wickets} - ${sanitizeHTML(lastBallDetail.commentary, { allowedTags: [] })}`
+                            message: `${teamName} ${score}/${wickets} - ${sanitizeHTML(lastBallDetail.commentary, {allowedTags: []})}`
                         });
                     }
                 }
-                this.setState({over});
+                let liveScoreMessage = `${teamName} ${score}/${wickets} (${over})`;
+                this.setState({over: over, liveScoreMessage: liveScoreMessage});
             })
     }
 
-    cronjobNotification(id) {
+    cronjobNotification(id, matchTitle) {
+        this.getLiveScore(id);
+        this.setState({currentMatch: matchTitle, currentMatchId: id});
         const intervalTime = this.state.interval * 1000;
         setInterval(() => {
             this.getLiveScore(id);
         }, intervalTime);
     }
 
-    shouldShowTMC(flag){
-        this.setState({shouldShowTMC : flag});
+    shouldShowTMC(flag) {
+        this.setState({shouldShowTMC: flag});
     }
 
-    openExternalURL(url){
-        require('electron').shell.openExternal(url)
+    openExternalURL(url) {
+        require('electron').shell.openExternal(url);
     }
 
     render() {
@@ -153,46 +157,62 @@ class App extends React.Component {
                             </div>
                         </div>
                     </AccordionItemTitle>
+
                     <AccordionItemBody>
-                        <div className="notification-content">
-                            <div className="notification-title">Get Notification Alerts on</div>
-                            <Row className="padding-spacer">
-                                <Col lg={5} md={5} sm={5} xs={12} className="notification-container">
+                        {currentMatch[i].state === 'innings break' || currentMatch[i].state === 'inprogress' || currentMatch[i].state === 'rain'
+                            ?
+                            (<div className="notification-content">
+                                <div className="notification-title">Get Notification Alerts on</div>
+                                <Row className="padding-spacer">
+                                    <Col lg={5} md={5} sm={5} xs={12} className="notification-container">
                                         <span className="notification-title-1">
                                             Something Special
                                         </span>
                                         <hr className="custom-divider"/>
-                                    <div>
-                                        <b>4's</b> <input type="checkbox" value="fours"
-                                                   checked={this.state.isFourEnabled} onChange={this.updateFour}/>
-                                    </div>
-                                    <hr className="custom-divider"/>
-                                    <div>
-                                        <b>6's</b> <input type="checkbox" value="sixes"
-                                                   checked={this.state.isSixEnabled} onChange={this.updateSix}/>
-                                    </div>
-                                    <hr className="custom-divider"/>
-                                    <div>
-                                        <b>Wickets</b> <input type="checkbox" value="wickets"
-                                                       checked={this.state.isWicketEnabled} onChange={this.updateWicket}/>
-                                    </div>
-                                </Col>
-                                <Col lg={2} md={2} sm={2} xs={12} className="optional-container">
-                                    OR
-                                </Col>
-                                <Col lg={5} md={5} sm={5} xs={12} className="notification-container">
+                                        <div>
+                                            <b>4's</b> <input type="checkbox" value="fours"
+                                                              checked={this.state.isFourEnabled}
+                                                              onChange={this.updateFour}/>
+                                        </div>
+                                        <hr className="custom-divider"/>
+                                        <div>
+                                            <b>6's</b> <input type="checkbox" value="sixes"
+                                                              checked={this.state.isSixEnabled}
+                                                              onChange={this.updateSix}/>
+                                        </div>
+                                        <hr className="custom-divider"/>
+                                        <div>
+                                            <b>Wickets</b> <input type="checkbox" value="wickets"
+                                                                  checked={this.state.isWicketEnabled}
+                                                                  onChange={this.updateWicket}/>
+                                        </div>
+                                    </Col>
+                                    <Col lg={2} md={2} sm={2} xs={12} className="optional-container">
+                                        OR
+                                    </Col>
+                                    <Col lg={5} md={5} sm={5} xs={12} className="notification-container">
                                         <span className="notification-title-2">
                                             Every
                                         </span>
                                         <hr className="custom-divider"/>
-                                    <input type="text" value={this.state.intervalValue} placeholder="______(In Minutes)"
-                                    className="minutes-setting" onChange={this.updateIntervalValue} autoFocus/>
-                                    <hr className="custom-divider"/>
-                                    Minutes
-                                </Col>
-                            </Row>
-                            <Button bsStyle="success"  className="save-config-btn" onClick={() => this.cronjobNotification(currentMatch[i].id)}>SAVE</Button>
-                        </div>
+                                        <input type="text" value={this.state.intervalValue}
+                                               placeholder="______(In Minutes)"
+                                               className="minutes-setting" onChange={this.updateIntervalValue}
+                                               autoFocus/>
+                                        <hr className="custom-divider"/>
+                                        Minutes
+                                    </Col>
+                                </Row>
+                                <Button bsStyle="success" className="save-config-btn"
+                                        onClick={() => this.cronjobNotification(currentMatch[i].id, currentMatch[i].title)}>
+                                    Enable Notification
+                                </Button>
+                            </div>) :
+                            (<div className="notification-no-match">
+                                {currentMatch[i].status} <br/>
+                                <i className="tip">(Notifications are only available for live matches)</i>
+                            </div>)
+                        }
                     </AccordionItemBody>
                 </AccordionItem>
             )
@@ -202,8 +222,16 @@ class App extends React.Component {
             <div className="container">
                 <h1 className="container-header">Hello, Cricket Scores!</h1>
                 <h3 className="subtitle">Get live cricket score updates here</h3><br/>
-                <Button bsStyle="primary" onClick={() => this.triggerNotification('test',{title: "Hey Stay Tunned", message: "You will receive notification of the Live Matches"})}>Try Sample Notification</Button>
-                <br/>
+                <Button bsStyle="primary" onClick={() => this.triggerNotification('test', {
+                    title: "Hey Stay Tunned",
+                    message: "You will receive notification of the Live Matches"
+                })}>Try Sample Notification</Button>
+                <div className="updates-choosen">
+                    <span>Notifications Enabled For :</span> &nbsp;
+                    <b>{this.state.currentMatch}</b> <br/>
+                    <span
+                        className="current-score-detail">{!!this.state.liveScoreMessage ? this.state.liveScoreMessage : ""}</span>
+                </div>
                 <br/>
                 <div>
                     <div>
@@ -213,11 +241,16 @@ class App extends React.Component {
                     </div>
                 </div>
                 <div className="footer-section">
-                    <div className="float-left" onMouseEnter={() => this.shouldShowTMC(true)} onMouseLeave={() => this.shouldShowTMC(false)}>
+                    <div className="float-left" onMouseEnter={() => this.shouldShowTMC(true)}
+                         onMouseLeave={() => this.shouldShowTMC(false)}>
                         <a href="#"> Terms & Conditions</a>
                     </div>
                     <div className="float-right">
-                        Made with <span className="craft-style">&#9829;</span> by <a href='#' onClick={() => this.openExternalURL('https://github.com/Harshmakadia')}>Harsh Makadia</a> & <a href='#' onClick={() => this.openExternalURL('https://github.com/ridhamtarpara')}>Ridham Tarpara</a>
+                        Made with <span className="craft-style">&#9829;</span> by <a href='#'
+                                                                                     onClick={() => this.openExternalURL('https://github.com/Harshmakadia')}>Harsh
+                        Makadia</a> & <a href='#'
+                                         onClick={() => this.openExternalURL('https://github.com/ridhamtarpara')}>Ridham
+                        Tarpara</a>
                     </div>
                 </div>
                 <br/>
@@ -225,6 +258,7 @@ class App extends React.Component {
                 <div className="tmc-section float-left">
                     This tool is developed strictly for <b><i>Non-commercial use</i></b> only
                 </div>}
+                <div className="back-img"></div>
             </div>
         );
     }
