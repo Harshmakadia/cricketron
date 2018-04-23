@@ -12,7 +12,7 @@
 }
 
 .accordion {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    /*border: 1px solid rgba(0, 0, 0, 0.1);*/
     border-radius: 2px;
 }
 
@@ -39,9 +39,11 @@
 }
 
 .accordion__body {
-    padding: 20px;
+    padding: 0;
     display: block;
     animation: fadein 0.35s ease-in;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .accordion__body--hidden {
@@ -164,3 +166,9 @@
 .accordion__item{
     margin-bottom: 10px;
 }
+
+.accordion__item:focus{
+    border: 1px solid #000;
+}
+
+.notification-content{border: 1px solid rgba(0, 0, 0, 0.1);}
