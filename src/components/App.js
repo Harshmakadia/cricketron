@@ -45,6 +45,7 @@ class App extends React.Component {
         this.cronjobNotification = this.cronjobNotification.bind(this);
         this.updateIntervalValue = this.updateIntervalValue.bind(this);
         this.shouldShowTMC = this.shouldShowTMC.bind(this);
+        this.openExternalURL = this.openExternalURL.bind(this);
     }
 
     componentWillMount() {
@@ -125,6 +126,10 @@ class App extends React.Component {
 
     shouldShowTMC(flag){
         this.setState({shouldShowTMC : flag});
+    }
+
+    openExternalURL(url){
+        require('electron').shell.openExternal(url)
     }
 
     render() {
@@ -212,7 +217,7 @@ class App extends React.Component {
                         <a href="#"> Terms & Conditions</a>
                     </div>
                     <div className="float-right">
-                        Made with <span className="craft-style">&#9829;</span> by <a href="https://github.com/Harshmakadia">Harsh Makadia</a> & <a href="https://github.com/ridhamtarpara">Ridham Tarpara</a>
+                        Made with <span className="craft-style">&#9829;</span> by <a href='#' onClick={() => this.openExternalURL('https://github.com/Harshmakadia')}>Harsh Makadia</a> & <a href='#' onClick={() => this.openExternalURL('https://github.com/ridhamtarpara')}>Ridham Tarpara</a>
                     </div>
                 </div>
                 <br/>
