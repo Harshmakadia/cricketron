@@ -220,8 +220,11 @@ class App extends React.Component {
 
         return (
             <div className="container">
-                <h1 className="container-header">Hello, Cricket Scores!</h1>
-                <h3 className="subtitle">Get live cricket score updates here</h3><br/>
+                <div className="container-header text-center">
+                    <h1>Cricketron</h1>
+                    <b><i>Get live cricket score updates here</i></b>
+                </div>
+                <br/>
                 <Button bsStyle="primary" onClick={() => this.triggerNotification('test', {
                     title: "Hey Stay Tunned",
                     message: "You will receive notification of the Live Matches"
