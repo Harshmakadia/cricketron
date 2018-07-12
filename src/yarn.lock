@@ -149,9 +149,9 @@ create-react-context@^0.1.5:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.1.6.tgz#0f425931d907741127acc6e31acb4f9015dd9fdc"
 
-cric-live@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/cric-live/-/cric-live-1.0.8.tgz#18799e35864a4ea0448a05980e72e79784be46ce"
+cric-live@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/cric-live/-/cric-live-1.0.12.tgz#16e09c46c3ab4ccb4dbf83b8623e951070da21cd"
   dependencies:
     cheerio "^1.0.0-rc.2"
     lodash "^4.17.5"

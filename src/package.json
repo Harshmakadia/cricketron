@@ -15,7 +15,7 @@
     "react-dom": "^16.0.0"
   },
   "dependencies": {
-    "cric-live": "^1.0.10",
+    "cric-live": "^1.0.12",
     "path": "^0.12.7",
     "sanitize-html": "^1.18.2",
     "react-accessible-accordion": "^2.3.1",
