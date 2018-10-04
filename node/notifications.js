@@ -12,24 +12,24 @@ ipcMain.on('notification', (event, arg) => {
         case 'FOUR':
             data = arg.data;
             data.sound = true;
-            data.icon = path.join(__dirname, 'logo.png');
-            data.contentImage = path.join(__dirname, 'four.png');
+            data.icon = path.join(__dirname, 'four.png');
+            data.contentImage = path.join(__dirname, 'logo.png');
             data.closeLabel = 'Close';
             notifier.notify(arg.data);
             break;
         case 'SIX':
             data = arg.data;
             data.sound = true;
-            data.icon= path.join(__dirname, 'logo.png');
-            data.contentImage = path.join(__dirname, 'six.png');
+            data.icon= path.join(__dirname, 'six.png');
+            data.contentImage = path.join(__dirname, 'logo.png');
             data.closeLabel = 'Close';
             notifier.notify(arg.data);
             break;
         case 'WICKET':
             data = arg.data;
             data.sound = true;
-            data.icon=  path.join(__dirname, 'logo.png');
-            data.contentImage = path.join(__dirname, 'wicket.png');
+            data.icon=  path.join(__dirname, 'wicket.png');
+            data.contentImage = path.join(__dirname, 'logo.png');
             data.closeLabel = 'Close';
             notifier.notify(arg.data);
             break;

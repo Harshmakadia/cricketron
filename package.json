@@ -16,8 +16,9 @@
     "build": "webpack --config webpack.build.config.js",
     "packagemac": "webpack --config webpack.build.config.js",
     "packagewin": "webpack --config webpack.build.config.js",
-    "postpackagemac": "electron-packager ./ --out=./builds --icon='./node/logo.icns'",
-    "postpackagewin": "electron-packager ./ --out=./builds --platform=win32 --arch=x64 --icon=node/logo.ico"
+    "postpackagemac": "electron-packager ./ --out=./builds --overwrite --icon='./node/logo.icns'",
+    "postpackagewin": "electron-packager ./ --out=./builds --overwrite --platform=win32 --arch=x64 --icon=node/logo.ico",
+    "postpackagelinux": "electron-packager ./ --out=./builds --overwrite --platform=linux --arch=x64 --icon=node/logo.png --prune=true"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
