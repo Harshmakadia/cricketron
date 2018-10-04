@@ -92,17 +92,17 @@ class App extends React.Component {
                 const wickets = liveMatchScore.score.detail.batting.wickets;
                 const score = liveMatchScore.score.detail.batting.score;
                 const teamName = liveMatchScore.score.detail.batting.shortName;
+                let  batsmen= ''
+                liveMatchScore.score.batsmen.forEach(batsman => {
+                    const batsmanName = `${batsman.shortName}${batsman.strike === '1' ? '*' : ''}`;
+                    batsmen += `${batsmanName.padEnd(25)} \t${batsman.r}(${batsman.b})\n`
+                });
                 const lastBallDetail = liveMatchScore.score.lastBallDetail;
                 if (this.state.over !== over && over !== "0") {
                     if ((lastBallScore === "4" && this.state.isFourEnabled) || (lastBallScore === "6" && this.state.isSixEnabled)) {
-                        let message = "";
-                        liveMatchScore.score.batsmen.forEach(batsman => {
-                            const batsmanName = `${batsman.shortName}${batsman.strike === '1' ? '*' : ''}`;
-                            message += `${batsmanName.padEnd(25)} \t${batsman.r}(${batsman.b})\n`
-                        });
                         this.triggerNotification(`${scoreMapper[lastBallScore]}`, {
                             title: `${scoreMapper[lastBallScore]} by ${lastBallDetail.batsman[0].shortName} - ${teamName} ${score}/${wickets} (${over})`,
-                            message
+                            batsmen
                         });
                     }
                     if (lastBallScore === "W" && this.state.isWicketEnabled) {
@@ -114,7 +114,7 @@ class App extends React.Component {
                     }
                 }
                 let liveScoreMessage = `${teamName} ${score}/${wickets} (${over})`;
-                this.setState({over: over, liveScoreMessage: liveScoreMessage});
+                this.setState({over: over, liveScoreMessage: liveScoreMessage, batsmen});
             })
     }
 
@@ -238,6 +238,9 @@ class App extends React.Component {
                     <b>{this.state.currentMatch}</b> <br/>
                     <span
                         className="current-score-detail">{!!this.state.liveScoreMessage ? this.state.liveScoreMessage : ""}</span>
+                        <br/>
+                    <span
+                        className="current-score-detail">{!!this.state.batsmen ? this.state.batsmen : ""}</span>
                 </div>
                 <br/>
                 <div>
