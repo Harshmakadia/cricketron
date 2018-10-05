@@ -1,6 +1,7 @@
 import '../assets/css/App.css';
 import '../assets/css/accordion.css';
 import React, {Component} from 'react';
+import Reload from '../public/images/refresh.png';
 import {ipcRenderer} from 'electron';
 import sanitizeHTML from 'sanitize-html';
 // import cricLive from '../../../npm-cricbuzz';
@@ -233,6 +234,7 @@ class App extends React.Component {
                     title: "Hey Stay Tunned",
                     message: "You will receive notification of the Live Matches"
                 })}>Try Sample Notification</Button>
+                <Button bsStyle="link" onClick={() => location.reload()}><img src={Reload} alt="Reload" height="18em" className="img-circle" /></Button>
                 <div className="updates-choosen">
                     <span>Notifications Enabled For :</span> &nbsp;
                     <b>{this.state.currentMatch}</b> <br/>
