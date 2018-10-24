@@ -37,7 +37,9 @@ class App extends React.Component {
             interval: 20,
             over: "0",
             intervalValue: "",
-            shouldShowTMC: ""
+            shouldShowTMC: "",
+            isMatchedLoading: true,
+            isNotificationsEnabled: false
         }
         this.triggerNotification = this.triggerNotification.bind(this);
         this.updateFour = this.updateFour.bind(this);
@@ -54,7 +56,7 @@ class App extends React.Component {
         this.setState({currentMatches: []});
         cricLive.getRecentMatches()
             .then(currentMatches => {
-                this.setState({currentMatches})
+                this.setState({currentMatches, isMatchedLoading: false})
             })
     }
 
@@ -66,20 +68,20 @@ class App extends React.Component {
     }
 
     updateFour() {
-        this.setState({isFourEnabled: !this.state.isFourEnabled});
+        this.setState({isFourEnabled: !this.state.isFourEnabled, isNotificationsEnabled: !this.state.isNotificationsEnabled});
     };
 
     updateSix() {
-        this.setState({isSixEnabled: !this.state.isSixEnabled});
+        this.setState({isSixEnabled: !this.state.isSixEnabled, isNotificationsEnabled: !this.state.isNotificationsEnabled});
     };
 
     updateWicket() {
-        this.setState({isWicketEnabled: !this.state.isWicketEnabled});
+        this.setState({isWicketEnabled: !this.state.isWicketEnabled, isNotificationsEnabled: !this.state.isNotificationsEnabled});
     }
 
     updateIntervalValue(e) {
         //Update Interval Value here
-        this.setState({intervalValue: e.target.value});
+        this.setState({intervalValue: e.target.value, isNotificationsEnabled: !this.state.isNotificationsEnabled});
     }
 
     getLiveScore(id) {
@@ -207,7 +209,7 @@ class App extends React.Component {
                                             Minutes
                                         </Col>
                                     </Row>
-                                    <Button bsStyle="success" className="save-config-btn"
+                                    <Button bsStyle="success" className={`save-config-btn ${this.state.isNotificationsEnabled}`}
                                             onClick={() => this.cronjobNotification(currentMatch[i].id, currentMatch[i].title)}>
                                         Enable Notification
                                     </Button>
@@ -245,6 +247,7 @@ class App extends React.Component {
                         className="current-score-detail">{!!this.state.batsmen ? this.state.batsmen : ""}</span>
                 </div>
                 <br/>
+                {this.state.isMatchedLoading ? <img id="loading" src="http://simpleicon.com/wp-content/uploads/refresh.png" height="250em"/>: ""}
                 <div>
                     <div>
                         <Accordion>
